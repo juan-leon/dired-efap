@@ -76,6 +76,12 @@
 ;;
 ;; - A lot of dirty hacks removed from code
 
+;;; Feedback
+
+;; Bugs reports, comments, ideas, etc. welcomed.
+
+;; https://github.com/juan-leon/dired-efap
+
 ;;; Code:
 
 (eval-and-compile
@@ -164,6 +170,7 @@ extension."
 ;; Local variables
 (defvar dired-efap-overlay)
 
+;;;###autoload
 (defun dired-efap-click (event)
   "Move to the point and, depending of the value of
 `dired-efap-use-mouse', if the click has been double and the
@@ -203,6 +210,7 @@ the changes, use \\[dired-efap-abort]."
    "This mode can be enabled only by `dired-efap-change-to-dired-efap-mode'"))
 (put 'dired-efap-mode 'mode-class 'special)
 
+;;;###autoload
 (defun dired-efap (&optional from-mouse)
   "Change the mode of a dired buffer to another in witch the filename
 at point becomes editable.  Press RET to actually rename the file or
