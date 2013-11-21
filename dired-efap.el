@@ -5,6 +5,7 @@
 ;; Filename: dired-efap.el
 ;; Author: Juan-Leon Lahoz <juanleon1@gmail.com>
 ;; Version: 0.8
+;; URL: https://github.com/juan-leon/dired-efap
 ;; Keywords: dired, environment, files, renaming
 
 ;; This program is free software; you can redistribute it and/or modify it
@@ -25,9 +26,9 @@
 ;;; Commentary:
 
 ;; dired-efap.el allows the user to edit the filename at point, by hitting
-;; a key (like f2) or double-clicking it. The name is edited in the dired
+;; a key (like f2) or double-clicking it.  The name is edited in the dired
 ;; buffer, and the renaming takes effect when the user hits the RET
-;; key. Only the name of the file at point is tangible and editable, and it
+;; key.  Only the name of the file at point is tangible and editable, and it
 ;; uses an special font.
 ;;
 ;; This package provides a similar user interface to renaming files to the
@@ -37,7 +38,7 @@
 ;; The idea for this file was originated from a suggestion I received from Eli
 ;; Tziperman to improve wdired.
 ;;
-;; Comments, bug reports, etc. welcomed
+;; Comments, bug reports and ideas welcomed
 
 ;;; Usage:
 
@@ -76,12 +77,6 @@
 ;;
 ;; - A lot of dirty hacks removed from code
 
-;;; Feedback
-
-;; Bugs reports, comments, ideas, etc. welcomed.
-
-;; https://github.com/juan-leon/dired-efap
-
 ;;; Code:
 
 (eval-and-compile
@@ -93,17 +88,17 @@
   :group 'dired)
 
 (defcustom dired-efap-use-mouse t
-  "*Control the use on the mouse for renaming filename at point. If
-you use the mouse to access this functionality, you'll lose the current
-use of the left button (usually drag region, witch has no great
-utility in dired mode) other than moving the cursor. The others mouse
-buttons are unaffected. Possibles values:
+  "*Control the use on the mouse for renaming filename at point.
+If you use the mouse to access this functionality, you'll lose
+the current use of the left button (usually drag region, witch
+has no great utility in dired mode) other than moving the cursor.
+The others mouse buttons are unaffected.  Possibles values:
 
 If t, you can rename a file double-clicking in its line in the
 buffer.
 
 If `selected', you can rename a by clicking in its name when the
-cursor is already over it. It includes double-clicking the name.
+cursor is already over it.  It includes double-clicking the name.
 
 If nil, the mouse is not used for renaming files at point."
   :type '(choice (const :tag "Double click on file" t)
@@ -114,10 +109,10 @@ If nil, the mouse is not used for renaming files at point."
 (defcustom dired-efap-initial-filename-selection 'no-extension
   "*Control if the file name will be selected when starting the edition.
 
-Setting this to non-nil is handy for those users that want to be able
-to easily replace the whole filename.  If t, the whole name is
-selected.  Use `no-extension' for selecting only the name without
-extension."
+Setting this to non-nil is handy for those users that want to be
+able to easily replace the whole filename.  If t, the whole name
+is selected.  Use `no-extension' for selecting only the name
+without extension."
   :type '(choice (const :tag "Select the whole filename" t)
                  (const :tag "Select name without extension" no-extension)
                  (other :tag "Do not select name" nil))
@@ -137,10 +132,10 @@ extension."
 (defvar dired-efap-face 'dired-efap-face)
 
 (defvar dired-efap-mode-hooks nil
-  "Hooks run when changing to dired-efap mode.")
+  "Hooks run when changing to `dired-efap' mode.")
 
 (defvar dired-efap-load-hooks nil
-  "Hooks run after loading dired-efap code.")
+  "Hooks run after loading `dired-efap' code.")
 
 (defvar dired-efap-old-mouse-func
   (let ((current-map (current-local-map))
@@ -172,9 +167,11 @@ extension."
 
 ;;;###autoload
 (defun dired-efap-click (event)
-  "Move to the point and, depending of the value of
-`dired-efap-use-mouse', if the click has been double and the
-previous position of the point, edit filename at point.
+  "Move to the point and, if needed, edit filename at point.
+
+Depending of the value of `dired-efap-use-mouse', if EVENT is a
+doubleclick, and the previous position of the point, edit
+filename at point.
 
 See `dired-efap-use-mouse' and `dired-efap'"
   (interactive "e")
@@ -190,10 +187,11 @@ See `dired-efap-use-mouse' and `dired-efap'"
     (funcall dired-efap-old-mouse-func event)))
 
 (defun dired-efap-mouse-clicked (event)
-  "Finish the edition of the filename at point, performing the
-necessary changes in disk. This only happens if the click is outside
-the filename but in the dired buffer. Anyway, point is moved to the
-click point. See also `dired-efap' and `dired-efap-mode'"
+  "Finish the edition of the filename and rename file, if needed.
+
+This only happens if the click that generated EVENT is outside
+the filename but in the dired buffer.  Point is moved to the click
+point in any case.  See also `dired-efap' and `dired-efap-mode'"
   (interactive "e")
   (let ((point-clicked (posn-point (event-start event))))
     (if (or (< point-clicked (overlay-start dired-efap-overlay))
@@ -202,8 +200,8 @@ click point. See also `dired-efap' and `dired-efap-mode'"
   (mouse-set-point event))
 
 (defun dired-efap-mode ()
-  "\\<dired-efap-mode-map>Mode for rename the file at point. Edit the
-name of the file at point and then press RET to rename it. To abort
+  "\\<dired-efap-mode-map>Mode for rename the file at point.
+Edit the name of the file at point and then press RET to rename it.  To abort
 the changes, use \\[dired-efap-abort]."
   (interactive)
   (error
@@ -212,9 +210,9 @@ the changes, use \\[dired-efap-abort]."
 
 ;;;###autoload
 (defun dired-efap (&optional from-mouse)
-  "Change the mode of a dired buffer to another in witch the filename
-at point becomes editable.  Press RET to actually rename the file or
-directory in disk, and C-g to abort.
+  "Make the filename at point editable by user.
+Press RET to actually rename the file or directory in disk, and
+C-g to abort.
 
 If FROM-MOUSE is not nil, the mode is being set because of a mouse event."
   (interactive)
@@ -244,10 +242,11 @@ If FROM-MOUSE is not nil, the mode is being set because of a mouse event."
                       'dired-efap--select-filename)))
 
 (defun dired-efap--select-filename ()
+  "Set point and mark as needed for initial filename selection."
   (push-mark (overlay-start dired-efap-overlay) t t)
   (goto-char (overlay-end dired-efap-overlay))
   (if (equal dired-efap-initial-filename-selection 'no-extension)
-      (let ((new-point 
+      (let ((new-point
              (search-backward "." (overlay-start dired-efap-overlay) t)))
         (if new-point (goto-char new-point)))))
 
@@ -266,9 +265,8 @@ If FROM-MOUSE is not nil, the mode is being set because of a mouse event."
   (revert-buffer))
 
 (defun dired-efap-finish ()
-  "Finish the edition of the filename at point, performing the
-necessary changes in disk. See also `dired-efap' and
-`dired-efap-mode'"
+  "Finish the edition of the filename and rename file, if needed.
+See also `dired-efap' and `dired-efap-mode'"
   (interactive)
   (if (equal (overlay-start dired-efap-overlay)
              (overlay-end dired-efap-overlay))
@@ -298,7 +296,7 @@ necessary changes in disk. See also `dired-efap' and
       (dired-efap--change-to-dired-mode))))
 
 
-(defun dired-efap-abort (&optional &rest args)
+(defun dired-efap-abort (&optional &rest unused)
   "Stop editing filename at point and abort changes."
   (interactive)
   (dired-efap--change-to-dired-mode))
@@ -323,7 +321,7 @@ necessary changes in disk. See also `dired-efap' and
       (overlay-put dired-efap-overlay 'mouse-face nil))))
 
 (defun dired-efap--keep-in-name ()
-  "Make sure point do not leaves filename being edited."
+  "Make sure point does not leave filename being edited."
   (if (boundp 'dired-efap-overlay)
       (let ((new-point (if (< (point) (overlay-start dired-efap-overlay))
                            (overlay-start dired-efap-overlay)
