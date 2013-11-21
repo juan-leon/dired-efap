@@ -271,10 +271,13 @@ See also `dired-efap' and `dired-efap-mode'"
   (if (equal (overlay-start dired-efap-overlay)
              (overlay-end dired-efap-overlay))
       (error "Filename empty"))
-  (let ((filename-ori (expand-file-name (overlay-get dired-efap-overlay 'original-name)))
-        (filename-new (expand-file-name (buffer-substring-no-properties
-                                         (overlay-start dired-efap-overlay)
-                                         (overlay-end dired-efap-overlay))))
+  (let ((filename-ori (concat (dired-current-directory)
+                              (overlay-get dired-efap-overlay
+                                           'original-name)))
+        (filename-new (concat (dired-current-directory)
+                              (buffer-substring-no-properties
+                               (overlay-start dired-efap-overlay)
+                               (overlay-end dired-efap-overlay))))
         (errors nil))
     (if (not (equal filename-ori filename-new))
         (if (file-exists-p filename-new)
