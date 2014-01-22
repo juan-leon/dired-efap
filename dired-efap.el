@@ -313,7 +313,7 @@ See also `dired-efap' and `dired-efap-mode'"
           (end (dired-move-to-end-of-filename)))
       (set-text-properties (point-min) (point-max) nil)
       (put-text-property (point-min) start 'rear-nonsticky t)
-      (put-text-property (point-min) start 'read-only t)
+      (put-text-property (point-min) (1- start) 'read-only t)
       (put-text-property end (point-max)   'read-only t)
       ;; Create overlay
       (set (make-local-variable 'dired-efap-overlay)

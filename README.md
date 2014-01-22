@@ -16,6 +16,8 @@ Add `dired-efap.el` to your load-path and this line to your config file:
 ```lisp
 (require 'dired-efap)
 (define-key dired-mode-map [f2] 'dired-efap)
+;;; Only if you want to control rename with the mouse...
+(define-key dired-mode-map [down-mouse-1] 'dired-efap-click)
 ```
 
 ### Usage
@@ -23,6 +25,8 @@ Add `dired-efap.el` to your load-path and this line to your config file:
 To edit a name you can hit f2 (or the mapping of your choosing) or
 double-click over it. Pressing RET the file is actually renamed.  C-g
 aborts.
+
+![](screenshot.png "Screenshot")
 
 ### Customization
 
