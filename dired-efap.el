@@ -299,7 +299,7 @@ See also `dired-efap' and `dired-efap-mode'"
       (dired-efap--change-to-dired-mode))))
 
 
-(defun dired-efap-abort (&optional &rest unused)
+(defun dired-efap-abort ()
   "Stop editing filename at point and abort changes."
   (interactive)
   (dired-efap--change-to-dired-mode))
