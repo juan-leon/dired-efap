@@ -120,9 +120,9 @@ without extension."
 
 (defface dired-efap-face
   (if (>= emacs-major-version 21)
-      '((((supports '(:box t)) (background dark))
+      '((((supports (:box t)) (background dark))
          (:box (:line-width 2 :color "white" :style pressed-button)))
-        (((supports '(:box t)) (background light))
+        (((supports (:box t)) (background light))
          (:box (:line-width 2 :color "black" :style pressed-button)))
         (t (:inverse-video t)))
     '((t (:inverse-video t))))
