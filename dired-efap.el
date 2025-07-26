@@ -230,7 +230,7 @@ If FROM-MOUSE is not nil, the mode is being set because of a mouse event."
     (dired-efap--set-properties original-name)
     (buffer-disable-undo)
     (buffer-enable-undo)
-    (run-hooks dired-efap-mode-hooks))
+    (run-hooks 'dired-efap-mode-hooks))
   (if from-mouse
       ;; Move down the mouse, to have a better visibility.
       (set-mouse-position (selected-frame) (cadr (mouse-position))
